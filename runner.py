@@ -11,5 +11,5 @@ if __name__ == '__main__':
 	login = input('Enter login: ')
 	password = input('Enter password: ')
 	process = CrawlerProcess(settings = crawler_settings)
-	process.crawl(VkcomSpider, login, password, 'noyanlarspb')
+	process.crawl(VkcomSpider, login, password, 'novoorlov++')
 	process.start()

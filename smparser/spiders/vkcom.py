@@ -19,7 +19,18 @@ class VkcomSpider(scrapy.Spider):
 
         vk = vk_session.get_api()
         posts = vk.wall.get(domain=self.group_link, v=API_VERSION)
-        # print(len(posts['items']))
+      
         for i in range(len(posts['items'])):
-            yield SmparserItem(_id = posts['items'][i]['id'], owner_id = posts['items'][i]['owner_id'], text = posts['items'][i]['text'],)
+            post_id = posts['items'][i]['id']
+            owner_id = posts['items'][i]['owner_id']
+            text = posts['items'][i]['text']
+            from_id = posts['items'][i]['from_id']
+            yield SmparserItem(_id = post_id, owner_id = owner_id, text = text,)
+            comments = vk.wall.getComments(owner_id=owner_id, post_id=post_id)
+            for j in range(len(comments['items'])):
+                comment_id = comments['items'][j]['id']
+                owner_id = comments['items'][j]['owner_id']
+                text = comments['items'][j]['text']
+                from_id = comments['items'][j]['from_id']
+                yield SmparserItem(_id=comment_id,  owner_id = owner_id, text = text)
         pass
